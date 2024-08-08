@@ -1,18 +1,40 @@
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Student {
 
     static private final Scanner scan = new Scanner(System.in);
     static private String name;
     static private String grade;
-    static private Map<String, String> scores = new TreeMap<>(); // key for signature and value for the grade
+    static private final Map<String, String> scores = new TreeMap<>(); // key for signature and value for the grade
 
     public static void getGrades() {
         consoleValues();
-        showStudentPInfo();
+
+        System.out.println();
+        String head = String.format("Student name: %-30s Grade: %s", name, grade);
+        Arrays.stream(head.split(""))
+                .forEach(s -> System.out.print("-"));
+        System.out.println('-');
+        System.out.println(head);
+        Arrays.stream(head.split(""))
+                .forEach(s -> System.out.print("-"));
+        System.out.println('-');
+
+        scores.forEach((x, y) -> System.out.printf("\t\tSignature: %-26sScore: %.1f\n", x, Double.parseDouble(y)));
+
+        Arrays.stream(head.split(""))
+                .forEach(s -> System.out.print("-"));
+        System.out.println('-');
+
+        double avg = scores.values().stream()
+                .map(Double::parseDouble)
+                .collect(Collectors.averagingDouble(d -> d));
+
+        System.out.printf("Final average: %-8.2f Status: %s\n\n", avg, level(avg));
+
+        scores.clear();
+
     }
 
     private static void consoleValues() {
@@ -36,17 +58,16 @@ public class Student {
         }
     }
 
-    private static void showStudentPInfo() {
-        String head = String.format("Student name: %s\t\tGrade: %s", name, grade);
-        for(int i = 0; i < head.length(); i++) {
-            System.out.print('-');
+    private static String level(double avg) {
+        if (avg < 6) {
+            return "Don't passed.";
+        } else if (avg < 8) {
+            return "Passed with poor level.";
+        } else if (avg < 9) {
+            return "Passed with good level.";
+        } else {
+            return "Passed with excellent level.";
         }
-        System.out.println();
-        System.out.println(head);
-        for(int i = 0; i < head.length(); i++) {
-            System.out.print('-');
-        }
-        System.out.println();
     }
 
 

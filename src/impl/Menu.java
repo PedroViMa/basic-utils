@@ -87,10 +87,10 @@ public class Menu {
 
             switch (opt) {
                 case ENCODE:
-                    Encoder.encodeBase64("Hello world");
+                    Encoder.encodeBase64();
                     break;
                 case DECODE:
-                    Encoder.decodeBase64("SGVsbG8gd29ybGQ=");
+                    Encoder.decodeBase64();
                     break;
                 case EXIT:
                     return;
